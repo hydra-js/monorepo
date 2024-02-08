@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "hydra-monorepo",
+  "version": "1.0.0-alpha.0",
+  "description": "Elevating Development, Unleashing Efficiency.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "concurrently 'yarn start:server' 'yarn start:console'",
+    "start:server": "cd packages/server-nodejs && yarn start",
+    "start:console": "cd packages/console && yarn dev"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
