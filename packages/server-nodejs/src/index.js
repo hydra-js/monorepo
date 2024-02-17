@@ -1,4 +1,8 @@
 const express = require('express');
+const path = require('path');
+
+const logger = require('./utils/logger');
+
 const app = express();
 
 const port = 3001;
