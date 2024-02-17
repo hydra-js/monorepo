@@ -2,9 +2,14 @@
   "name": "hydra-server-nodejs",
   "version": "1.0.0-alpha.0",
   "description": "Hydra Nodjs Server",
-  "main": "./dist/index.js",
+  "main": "./dist/bin/bootstrap.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/bootstrap.js",
+    "prestart:prod": "yarn build",
+    "start:prod": "cross-env NODE_ENV=production node ./dist/bin/bootstrap.js",
+    "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/bin/bootstrap.js",
+    "prebuild": "rm -rf dist",
+    "build": "babel ./src --out-dir dist --copy-files",
     "lint": "eslint 'src/**/*.js'",
     "lint:fix": "yarn lint -- --fix",
     "format": "prettier --write 'src/**/*.js'"
