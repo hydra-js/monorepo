@@ -4,4 +4,11 @@ import 'regenerator-runtime/runtime';
 
 require('dotenv').config();
 
-require('../index');
+const { startConsole, startDefaultServer } = require('../core');
+
+const bootstrap = () => {
+  startConsole();
+  startDefaultServer();
+};
+
+bootstrap();
