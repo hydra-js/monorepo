@@ -2,6 +2,7 @@ require('./config');
 
 const startServer = require('./server');
 const { HYDRA_PORT } = require('./config');
+const { consoleRouter, defaultRouter } = require('./routes');
 
 const PORT = Number(HYDRA_PORT);
 
@@ -13,11 +14,15 @@ function getNextPort() {
 }
 
 function startConsole() {
-  startServer({ port: PORT, namespace: 'console' });
+  startServer({ namespace: 'console', port: PORT, router: consoleRouter });
 }
 
 function startDefaultServer() {
-  startServer({ port: getNextPort(), namespace: 'default' });
+  startServer({
+    namespace: 'default',
+    port: getNextPort(),
+    router: defaultRouter,
+  });
 }
 
 module.exports = {

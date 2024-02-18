@@ -20,7 +20,7 @@ function normalizePort(val) {
   return false;
 }
 
-function createServer({ port, namespace }) {
+function createServer({ port, namespace, router }) {
   const app = express();
 
   const publicPathTrail = [__dirname, '..', '..', 'public'];
@@ -49,10 +49,8 @@ function createServer({ port, namespace }) {
   const normalizedPort = normalizePort(port);
   app.set('port', normalizedPort);
 
-  // Routes
-  app.use('/api', (req, res) => {
-    res.send('Hello, World! :: API');
-  });
+  // API Routes
+  app.use('/api', router);
 
   app.use(express.static(path.join(...publicPathTrail)));
 
