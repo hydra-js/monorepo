@@ -2,12 +2,12 @@
   "name": "hydra-server-nodejs",
   "version": "1.0.0-alpha.0",
   "description": "Hydra Nodjs Server",
-  "main": "./dist/bin/bootstrap.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/bin/bootstrap.js",
+    "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "prestart:prod": "yarn build",
-    "start:prod": "cross-env NODE_ENV=production node ./dist/bin/bootstrap.js",
-    "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/bin/bootstrap.js",
+    "start:prod": "cross-env NODE_ENV=production node ./dist/index.js",
+    "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/index.js",
     "prebuild": "rm -rf dist",
     "build": "babel ./src --out-dir dist --copy-files",
     "lint": "eslint 'src/**/*.js'",
@@ -24,9 +24,16 @@
   "license": "MIT",
   "dependencies": {
     "core-js": "^3.36.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.4",
     "express": "^4.18.2",
-    "regenerator-runtime": "^0.14.1"
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
+    "morgan": "^1.10.0",
+    "regenerator-runtime": "^0.14.1",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",

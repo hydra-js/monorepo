@@ -4,11 +4,9 @@ import 'regenerator-runtime/runtime';
 
 require('dotenv').config();
 
-const { startConsole, startDefaultServer } = require('core');
+const { startConsole, startDefaultServer } = require('@hydra-js/core');
 
-const bootstrap = () => {
+export const bootstrap = () => {
   startConsole();
   startDefaultServer();
 };
-
-bootstrap();
