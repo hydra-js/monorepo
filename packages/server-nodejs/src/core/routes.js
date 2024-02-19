@@ -3,7 +3,9 @@ const express = require('express');
 const consoleRouter = express.Router();
 const defaultRouter = express.Router();
 
-// Console API Routes
+/**
+ * Console API Routes
+ */
 
 consoleRouter.get('/', (_, res) => {
   res.status(200).json({
@@ -42,7 +44,9 @@ consoleRouter.put('/resource/:name', (_, res) => res.status(200).json({}));
 consoleRouter.patch('/resource/:name', (_, res) => res.status(200).json({}));
 consoleRouter.delete('/resource/:name', (_, res) => res.status(200).json({}));
 
-// Default Server API Routes
+/**
+ * Default Server API Routes
+ */
 
 defaultRouter.get('/', (_, res) => {
   res.status(200).json({
