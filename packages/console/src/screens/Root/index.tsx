@@ -1,9 +1,9 @@
 import RootLayout from 'src/layouts/Root';
 
-export default function Home() {
+export default function Root() {
   return (
     <RootLayout>
-      <p>Home</p>
+      <p>Root</p>
     </RootLayout>
   );
 }
