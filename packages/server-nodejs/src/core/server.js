@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
@@ -7,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const morgan = require('morgan');
+const path = require('path');
 
 const logger = require('./logger');
 
@@ -20,13 +20,8 @@ function normalizePort(val) {
   return false;
 }
 
-function createServer({ port, namespace, router }) {
+async function createAPIServer({ namespace, router, port }) {
   const app = express();
-
-  const publicPathTrail = [__dirname, '..', '..', 'public'];
-  if (namespace !== 'console') publicPathTrail.push(namespace);
-
-  app.use('/assets', express.static(path.join(...publicPathTrail, 'assets')));
 
   app.use(cors());
   app.use(helmet());
@@ -38,25 +33,18 @@ function createServer({ port, namespace, router }) {
     max: 100, // limit each IP to 100 requests per windowMs
   });
   app.use(limiter);
+
   app.use(mongoSanitize());
   app.use(hpp());
-
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(morgan('dev'));
 
   // Set port
-  const normalizedPort = normalizePort(port);
-  app.set('port', normalizedPort);
+  app.set('port', port);
 
   // API Routes
   app.use('/api', router);
-
-  app.use(express.static(path.join(...publicPathTrail)));
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(...publicPathTrail, 'index.html'));
-  });
 
   // Error handling middleware
   app.use((err, req, res) => {
@@ -70,11 +58,50 @@ function createServer({ port, namespace, router }) {
   });
 
   // Start the server
-  const server = app.listen(normalizedPort, () => {
-    logger.log(`${namespace} is running on port ${normalizedPort}`);
+  const server = app.listen(port, () => {
+    logger.log(`${namespace}-API is running on port ${port}`);
   });
-
   return server;
 }
 
-module.exports = createServer;
+async function createWebServer({ namespace, port }) {
+  const app = express();
+
+  const publicPathTrail = [__dirname, '..', '..', 'public'];
+  if (namespace !== 'console') publicPathTrail.push(namespace);
+
+  app.use('/assets', express.static(path.join(...publicPathTrail, 'assets')));
+
+  app.use(express.static(path.join(...publicPathTrail)));
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(...publicPathTrail, 'index.html'));
+  });
+
+  // Set port
+  app.set('port', port);
+
+  // Error handling middleware
+  app.use((err, req, res) => {
+    logger.error(err.stack);
+    res.status(500).send('Internal Server Error!');
+  });
+
+  // Not found middleware
+  app.use((req, res) => {
+    res.status(404).send('Not Found');
+  });
+
+  // Start the server
+  const server = app.listen(port, () => {
+    logger.log(`${namespace} is running on port ${port}`);
+  });
+  return server;
+}
+
+async function startServer({ port, namespace, router }) {
+  const apiPort = port + 1;
+  await createAPIServer({ port: normalizePort(apiPort), namespace, router });
+  await createWebServer({ port: normalizePort(port), namespace });
+}
+
+module.exports = startServer;

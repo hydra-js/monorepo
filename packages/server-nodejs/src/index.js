@@ -1,3 +1,3 @@
-import { bootstrap } from './bin/bootstrap';
+import bootstrap from './bin/bootstrap';
 
 bootstrap();
