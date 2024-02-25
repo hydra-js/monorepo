@@ -67,14 +67,13 @@ async function createAPIServer({ namespace, router, port }) {
 async function createWebServer({ namespace, port }) {
   const app = express();
 
-  const publicPathTrail = [__dirname, '..', '..', 'public'];
-  if (namespace !== 'console') publicPathTrail.push(namespace);
+  const plublicPath = path.join(__dirname, '..', '..', 'public', namespace);
 
-  app.use('/assets', express.static(path.join(...publicPathTrail, 'assets')));
+  app.use('/assets', express.static(path.join(...plublicPath, 'assets')));
 
-  app.use(express.static(path.join(...publicPathTrail)));
+  app.use(express.static(path.join(...plublicPath)));
   app.get('/*', (req, res) => {
-    res.sendFile(path.join(...publicPathTrail, 'index.html'));
+    res.sendFile(path.join(...plublicPath, 'index.html'));
   });
 
   // Set port

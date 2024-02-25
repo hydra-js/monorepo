@@ -7,12 +7,20 @@ const logger = require('./logger');
 
 const startServer = require('./server');
 
-const { consoleRouter } = require('./routes');
+const { consoleRouter, defaultRouter } = require('./routes');
 
 const PORT = Number(HYDRA_PORT);
 
 async function startConsole() {
   startServer({ namespace: 'CONSOLE', port: PORT, router: consoleRouter });
+}
+
+async function startDefaultServer() {
+  startServer({
+    namespace: 'DEFAULT',
+    port: PORT + 1000,
+    router: defaultRouter,
+  });
 }
 
 async function bootstrap(init) {
@@ -34,4 +42,5 @@ async function bootstrap(init) {
 module.exports = {
   bootstrap,
   startConsole,
+  startDefaultServer,
 };
