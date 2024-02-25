@@ -20,8 +20,12 @@ function normalizePort(val) {
   return false;
 }
 
-async function createAPIServer({ namespace, router, port }) {
+async function createServer({ namespace, router, port }) {
   const app = express();
+
+  // Assets
+  const plublicPath = path.join(__dirname, '..', '..', 'public', namespace);
+  app.use('/assets', express.static(path.join(...plublicPath, 'assets')));
 
   app.use(cors());
   app.use(helmet());
@@ -36,6 +40,7 @@ async function createAPIServer({ namespace, router, port }) {
 
   app.use(mongoSanitize());
   app.use(hpp());
+
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(morgan('dev'));
@@ -46,38 +51,11 @@ async function createAPIServer({ namespace, router, port }) {
   // API Routes
   app.use('/api', router);
 
-  // Error handling middleware
-  app.use((err, req, res) => {
-    logger.error(err.stack);
-    res.status(500).send('Internal Server Error!');
-  });
-
-  // Not found middleware
-  app.use((req, res) => {
-    res.status(404).send('Not Found');
-  });
-
-  // Start the server
-  const server = app.listen(port, () => {
-    logger.log(`${namespace}-API is running on port ${port}`);
-  });
-  return server;
-}
-
-async function createWebServer({ namespace, port }) {
-  const app = express();
-
-  const plublicPath = path.join(__dirname, '..', '..', 'public', namespace);
-
-  app.use('/assets', express.static(path.join(...plublicPath, 'assets')));
-
-  app.use(express.static(path.join(...plublicPath)));
+  // Frontend
+  app.use(express.static(plublicPath));
   app.get('/*', (req, res) => {
-    res.sendFile(path.join(...plublicPath, 'index.html'));
+    res.sendFile(path.join(plublicPath, 'index.html'));
   });
-
-  // Set port
-  app.set('port', port);
 
   // Error handling middleware
   app.use((err, req, res) => {
@@ -98,9 +76,7 @@ async function createWebServer({ namespace, port }) {
 }
 
 async function startServer({ port, namespace, router }) {
-  const apiPort = port + 1;
-  await createAPIServer({ port: normalizePort(apiPort), namespace, router });
-  await createWebServer({ port: normalizePort(port), namespace });
+  createServer({ port: normalizePort(port), namespace, router });
 }
 
 module.exports = startServer;

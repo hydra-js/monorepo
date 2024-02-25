@@ -12,13 +12,13 @@ const { consoleRouter, defaultRouter } = require('./routes');
 const PORT = Number(HYDRA_PORT);
 
 async function startConsole() {
-  startServer({ namespace: 'CONSOLE', port: PORT, router: consoleRouter });
+  startServer({ namespace: 'console', port: PORT, router: consoleRouter });
 }
 
 async function startDefaultServer() {
   startServer({
-    namespace: 'DEFAULT',
-    port: PORT + 1000,
+    namespace: 'default',
+    port: PORT + 1,
     router: defaultRouter,
   });
 }
