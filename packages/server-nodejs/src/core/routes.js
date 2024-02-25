@@ -1,5 +1,7 @@
 const express = require('express');
 
+const userHandler = require('./handlers/user');
+
 const consoleRouter = express.Router();
 const defaultRouter = express.Router();
 
@@ -22,11 +24,11 @@ consoleRouter.get('/', (_, res) => {
 });
 
 // users
-consoleRouter.get('/users', (_, res) => res.status(200).json({}));
-consoleRouter.get('/users/:id', (_, res) => res.status(200).json({}));
-consoleRouter.post('/users', (_, res) => res.status(200).json({}));
-consoleRouter.patch('/users/:id', (_, res) => res.status(200).json({}));
-consoleRouter.delete('/users/:id', (_, res) => res.status(200).json({}));
+consoleRouter.get('/users', userHandler.getAll);
+consoleRouter.get('/users/:id', userHandler.getSingle);
+consoleRouter.post('/users', userHandler.post);
+consoleRouter.patch('/users/:id', userHandler.patch);
+consoleRouter.delete('/users/:id', userHandler.delete);
 
 // namespace
 consoleRouter.get('/namespace', (_, res) => res.status(200).json({}));

@@ -37,6 +37,9 @@ async function bootstrap(init) {
   } catch (err) {
     logger.error(err);
   }
+
+  // @todo: verify database intergrity
+  // @todo: fix it, if anything missing and log & nofity
 }
 
 module.exports = {
