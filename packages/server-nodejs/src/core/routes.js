@@ -1,12 +1,16 @@
 const express = require('express');
 
+const authHandler = require('./handlers/auth');
+const userHandler = require('./handlers/user');
+const { authUser } = require('./middlewares');
+
 const consoleRouter = express.Router();
 const defaultRouter = express.Router();
 
 /**
  * Console API Routes
  */
-
+// @todo: generate OpenAPI Spec.
 consoleRouter.get('/', (_, res) => {
   res.status(200).json({
     code: 200,
@@ -21,12 +25,24 @@ consoleRouter.get('/', (_, res) => {
   });
 });
 
-// users
-consoleRouter.get('/users', (_, res) => res.status(200).json({}));
-consoleRouter.get('/users/:id', (_, res) => res.status(200).json({}));
-consoleRouter.post('/users', (_, res) => res.status(200).json({}));
-consoleRouter.patch('/users/:id', (_, res) => res.status(200).json({}));
-consoleRouter.delete('/users/:id', (_, res) => res.status(200).json({}));
+// console.auth
+consoleRouter.post('/auth/register', authHandler.register);
+consoleRouter.post('/auth/login', authHandler.login);
+
+// console.users
+consoleRouter.get('/users', [authUser('admin')], userHandler.getAll);
+consoleRouter.get(
+  '/users/:id',
+  [authUser('admin', 'own')],
+  userHandler.getSingle,
+);
+consoleRouter.post('/users', [authUser('admin')], userHandler.post);
+consoleRouter.patch(
+  '/users/:id',
+  [authUser('admin', 'own')],
+  userHandler.patch,
+);
+consoleRouter.delete('/users/:id', [authUser('admin')], userHandler.delete);
 
 // namespace
 consoleRouter.get('/namespace', (_, res) => res.status(200).json({}));
@@ -47,7 +63,6 @@ consoleRouter.delete('/resource/:name', (_, res) => res.status(200).json({}));
 /**
  * Default Server API Routes
  */
-
 defaultRouter.get('/', (_, res) => {
   res.status(200).json({
     code: 200,
