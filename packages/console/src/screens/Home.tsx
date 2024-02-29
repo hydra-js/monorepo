@@ -1,9 +1,12 @@
 import MainLayout from 'src/layouts/Main';
+import RootLayout, { ContainerProps } from 'src/layouts/Root';
 
-export default function Home() {
+export default function Home(props: ContainerProps) {
   return (
-    <MainLayout>
-      <div>Home</div>
-    </MainLayout>
+    <RootLayout {...props}>
+      <MainLayout>
+        <div>Console Home</div>
+      </MainLayout>
+    </RootLayout>
   );
 }

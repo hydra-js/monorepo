@@ -10,7 +10,7 @@ const Container = styled.div`
 `;
 
 const SidebarWrapper = styled.aside`
-  width: 150px;
+  width: 120px;
   border-right: 1px solid #ccc;
 `;
 

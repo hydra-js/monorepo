@@ -1,16 +1,24 @@
-import { useContext } from 'react';
-import { AuthContext } from 'src/providers/Auth';
-import Unauthorized from 'src/screens/Unauthorized';
+import useAuth from 'src/hooks/useAuth';
+import Login from 'src/screens/Login';
 
-type Props = {
-  children: JSX.Element | JSX.Element[];
+export type ContainerProps = {
   enableAuth?: boolean;
 };
 
-export default function RootLayout({ children, enableAuth = false }: Props) {
-  const auth = useContext(AuthContext);
+type LayoutProps = {
+  children: JSX.Element | JSX.Element[];
+};
 
-  if (enableAuth && !auth) return <Unauthorized />;
+type Props = ContainerProps & LayoutProps;
+
+export default function RootLayout({ children, enableAuth = false }: Props) {
+  const { user, loading, error } = useAuth();
+
+  if (loading) return <div>loading...</div>;
+
+  if (error) return <div>{error}</div>;
+
+  if (enableAuth && !user) return <Login />;
 
   return <>{children}</>;
 }

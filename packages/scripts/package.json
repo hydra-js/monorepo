@@ -1,0 +1,12 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "db:purge": "node ./reset-hydra-database.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.2.0"
+  }
+}
