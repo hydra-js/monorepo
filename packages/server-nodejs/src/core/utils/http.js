@@ -55,30 +55,27 @@ Object.keys(httpStatus).forEach((code) => {
 // eslint-disable-next-line arrow-body-style
 const http = (resp) => {
   return {
-    ok: (message = httpStatus[_http.OK], errors = null) => {
+    ok: (message = httpStatus[_http.OK]) => {
       resp
         .status(_http.OK)
-        .json({ code: _http.OK, response: { message, errors } });
+        .json({ code: _http.OK, response: { message, error: false } });
     },
-    error: (
-      message = httpStatus[_http.INTERNAL_SERVER_ERROR],
-      errors = null,
-    ) => {
+    error: (message = httpStatus[_http.INTERNAL_SERVER_ERROR]) => {
       resp.status(_http.INTERNAL_SERVER_ERROR).json({
         code: _http.INTERNAL_SERVER_ERROR,
-        response: { message, errors },
+        response: { message, error: true },
       });
     },
-    badRequest: (message = httpStatus[_http.BAD_REQUEST], errors = null) => {
+    badRequest: (message = httpStatus[_http.BAD_REQUEST]) => {
       resp.status(_http.BAD_REQUEST).json({
         code: _http.BAD_REQUEST,
-        response: { message, errors },
+        response: { message, error: true },
       });
     },
-    unauthorized: (message = httpStatus[_http.UNAUTHORIZED], errors = null) => {
+    unauthorized: (message = httpStatus[_http.UNAUTHORIZED]) => {
       resp.status(_http.UNAUTHORIZED).json({
         code: _http.UNAUTHORIZED,
-        response: { message, errors },
+        response: { message, error: true },
       });
     },
     forbidden: (message = httpStatus[_http.FORBIDDEN], errors = null) => {

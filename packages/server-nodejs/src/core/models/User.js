@@ -8,15 +8,15 @@ const { HYDRA_JWT_SECRET } = require('../config');
 const schema = mongoose.Schema(
   {
     name: {
-      screenName: String,
-      firstName: String,
-      lastName: String,
+      screen_name: { type: String, required: [true, 'required'] },
+      first_name: String,
+      last_name: String,
     },
     handler: {
       type: String,
       lowercase: true,
-      required: [true, 'required!'],
       match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+      // required: [true, 'required']
       index: true,
       unique: true,
     },
@@ -28,7 +28,12 @@ const schema = mongoose.Schema(
       index: true,
       unique: true,
     },
-    password: String,
+    password: {
+      type: String,
+      required: [true, 'required!'],
+      minLength: 8,
+      maxLength: 13,
+    },
     bio: String,
     image: String,
     role: {
@@ -37,7 +42,7 @@ const schema = mongoose.Schema(
     },
     salt: String,
     status: {
-      type: Boolean,
+      type: Number,
       default: 0,
     },
   },
@@ -45,6 +50,18 @@ const schema = mongoose.Schema(
 );
 
 schema.plugin(uniqueValidator, { message: 'is already taken.' });
+
+schema.pre('save', function (next) {
+  const user = this;
+  if (user.isModified('password')) {
+    try {
+      this.setPassword(user.password);
+    } catch (err) {
+      return next(err);
+    }
+  }
+  return next();
+});
 
 schema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -78,12 +95,15 @@ schema.methods.generateJWT = function () {
 
 schema.methods.toJSON = function () {
   return {
-    _id: this._id,
+    id: this._id,
+    name: this.name,
     handler: this.handler,
     email: this.email,
-    token: this.generateJWT(),
     bio: this.bio,
     image: this.image,
+    role: this.role,
+    status: this.status,
+    token: this.generateJWT(),
   };
 };
 

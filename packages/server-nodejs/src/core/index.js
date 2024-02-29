@@ -3,7 +3,7 @@ require('./config');
 const mongoose = require('mongoose');
 
 const { HYDRA_MONGO_URL, HYDRA_PORT } = require('./config');
-const logger = require('./logger');
+const logger = require('./utils/logger');
 
 const startServer = require('./server');
 
@@ -27,6 +27,7 @@ async function bootstrap(init) {
   /**
    * Start database server
    */
+  mongoose.promise = global.Promise;
   // By default, Mongoose skips properties not defined in the schema (strictQuery).
   mongoose.set('strictQuery', true);
 

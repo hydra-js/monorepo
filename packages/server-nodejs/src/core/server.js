@@ -8,7 +8,7 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const path = require('path');
 
-const logger = require('./logger');
+const logger = require('./utils/logger');
 
 // Normalize port into a number, string, or false.
 function normalizePort(val) {
@@ -28,6 +28,7 @@ async function createServer({ namespace, router, port }) {
   app.use('/assets', express.static(path.join(...plublicPath, 'assets')));
 
   app.use(cors());
+  app.disable('x-powered-by'); // Reduce fingerprinting
   app.use(helmet());
   app.use(xss());
 

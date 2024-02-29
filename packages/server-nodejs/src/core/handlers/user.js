@@ -1,6 +1,8 @@
 const User = require('../models/User');
-const logger = require('../logger');
+const logger = require('../utils/logger');
 const { http } = require('../utils/http');
+
+// @todo: simplify and remove code duplication in `catch(err) {}` blocks
 
 module.exports = {
   getAll: async (_, res) => {
@@ -8,29 +10,32 @@ module.exports = {
       // @todo: remove token from response and sanatize the response further
       // might be able to do in the scheam level
       const users = await User.find({});
-      http(res).ok(users);
+      return http(res).ok(users);
     } catch (err) {
       logger.error(err);
-      http(res).error(undefined, err);
+      http(res).error(err);
     }
+    return res.end();
   },
   getSingle: async (req, res) => {
     try {
       const user = await User.findOne({ _id: req.params.id });
-      http(res).ok(user);
+      return http(res).ok(user);
     } catch (err) {
       logger.error(err);
-      http(res).error(undefined, err);
+      http(res).error(err);
     }
+    return res.end();
   },
   post: async (req, res) => {
     try {
       const user = await User.create(req.body);
-      http(res).ok(user);
+      return http(res).ok(user);
     } catch (err) {
       logger.error(err);
-      http(res).error(undefined, err);
+      http(res).error(err);
     }
+    return res.end();
   },
   patch: async (req, res) => {
     try {
@@ -40,11 +45,12 @@ module.exports = {
         req.body,
       );
       // @todo: return updated user
-      http(res).ok(user);
+      return http(res).ok(user);
     } catch (err) {
       logger.error(err);
-      http(res).error(undefined, err);
+      http(res).error(err);
     }
+    return res.end();
   },
   delete: async (req, res) => {
     try {
@@ -52,10 +58,11 @@ module.exports = {
       // do necessory changes in the schema to accomodate
       const user = await User.deleteOne({ _id: req.params.id });
       // @todo: send proper message for delete action
-      http(res).ok(user);
+      return http(res).ok(user);
     } catch (err) {
       logger.error(err);
-      http(res).error(undefined, err);
+      http(res).error(err);
     }
+    return res.end();
   },
 };
