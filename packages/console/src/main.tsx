@@ -3,37 +3,41 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Providers from 'src/providers';
-import Root from 'src/screens/Root';
 import Namespaces from 'src/screens/Namespaces';
 import Resources from 'src/screens/Resources';
 import Users from 'src/screens/Users';
 import Assets from 'src/screens/Assets';
 import Settings from 'src/screens/Settings';
+import Home from 'src/screens/Home';
+
+import { init as httpInit } from 'src/utils/http';
+
+httpInit();
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <Home enableAuth />,
   },
   {
     path: '/namespaces',
-    element: <Namespaces />,
+    element: <Namespaces enableAuth />,
   },
   {
     path: '/resources',
-    element: <Resources />,
+    element: <Resources enableAuth />,
   },
   {
     path: '/users',
-    element: <Users />,
+    element: <Users enableAuth />,
   },
   {
     path: '/assets',
-    element: <Assets />,
+    element: <Assets enableAuth />,
   },
   {
     path: '/settings',
-    element: <Settings />,
+    element: <Settings enableAuth />,
   },
 ]);
 

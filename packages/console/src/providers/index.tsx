@@ -1,11 +1,9 @@
-import ThemeProvider from './ThemeProvider';
-import { AuthContext } from './Auth';
 import { useEffect, useState } from 'react';
 
-function getAuth() {
-  const __hydra = window.localStorage.getItem('__hydra');
-  return __hydra ? JSON.parse(__hydra) : null;
-}
+import { AuthProvider } from 'src/hooks/useAuth';
+import { getAuth } from 'src/utils/auth';
+
+import ThemeProvider from './ThemeProvider';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -24,8 +22,8 @@ export default function Providers({ children }: Props) {
   }, [auth, isLoading]);
 
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthProvider>
       <ThemeProvider>{children}</ThemeProvider>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 }
