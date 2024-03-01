@@ -1,12 +1,12 @@
-import path from 'path'
-import { defineConfig } from 'rollup'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { getBabelOutputPlugin } from '@rollup/plugin-babel'
-import { dts } from 'rollup-plugin-dts'
+import path from 'path';
+import { defineConfig } from 'rollup';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
+import { dts } from 'rollup-plugin-dts';
 
 const getOutputFile = (basePath, { outputDir, name, extension }) => {
-  return path.resolve(basePath, outputDir, `${name}.${extension}`)
-}
+  return path.resolve(basePath, outputDir, `${name}.${extension}`);
+};
 
 // file information
 const CJS_FILE = {
@@ -15,35 +15,35 @@ const CJS_FILE = {
   name: 'index',
   outputDir: 'cjs',
   babelEnvName: 'buildCommonJS',
-}
+};
 const MJS_FILE = {
   extension: 'mjs',
   format: 'es',
   name: 'index',
   outputDir: 'esm',
   babelEnvName: 'buildESmodules',
-}
+};
 const DTS_FILE = {
   extension: 'd.ts',
   format: 'es',
   name: 'index',
   outputDir: 'types',
-}
+};
 
 // input files
-const INPUT_SRC_FILE = 'src/index.js'
-const INPUT_DTS_FILE = 'dist/tmp/types/index.d.ts'
+const INPUT_SRC_FILE = 'src/index.js';
+const INPUT_DTS_FILE = 'dist/tmp/types/index.d.ts';
 
 // transpiled files
-const BASE_DIR = 'dist'
-const OUTPUT_CJS_FILE = getOutputFile(BASE_DIR, CJS_FILE)
-const OUTPUT_MJS_FILE = getOutputFile(BASE_DIR, MJS_FILE)
+const BASE_DIR = 'dist';
+const OUTPUT_CJS_FILE = getOutputFile(BASE_DIR, CJS_FILE);
+const OUTPUT_MJS_FILE = getOutputFile(BASE_DIR, MJS_FILE);
 
 // type declaration file
-const OUTPUT_DTS_FILE = getOutputFile(BASE_DIR, DTS_FILE)
+const OUTPUT_DTS_FILE = getOutputFile(BASE_DIR, DTS_FILE);
 
 // getBabelOutputPlugin configuration
-const BABEL_CONFIG_FILE = path.resolve('.', 'babel.config.json')
+const BABEL_CONFIG_FILE = path.resolve('.', 'babel.config.json');
 
 export default defineConfig([
   {
@@ -85,4 +85,4 @@ export default defineConfig([
     ],
     plugins: [dts()],
   },
-])
+]);
