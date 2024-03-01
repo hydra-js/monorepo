@@ -23,6 +23,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@hydra-js/core": "file:../core",
     "console-stamp": "^3.1.2",
     "core-js": "^3.36.0",
     "cors": "^2.8.5",

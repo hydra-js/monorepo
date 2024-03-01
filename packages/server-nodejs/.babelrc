@@ -5,7 +5,7 @@
       "module-resolver",
       {
         "alias": {
-          "@hydra-js/core": "./src/core",
+          "@hydra-js/core-local": "./src/core",
           "utils": "./src/utils"
         }
       }
