@@ -1,5 +1,7 @@
 import { http } from '../utils/http';
-import logger from '../utils/logger';
+// import logger from '../utils/logger';
+
+const logger = console;
 
 const health = (req, res) => {
   try {

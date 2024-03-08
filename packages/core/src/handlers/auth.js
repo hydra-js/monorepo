@@ -2,7 +2,9 @@ import pick from 'lodash/pick';
 
 import User from '../models/User';
 import { http } from '../utils/http';
-import logger from '../utils/logger';
+// import logger from '../utils/logger';
+
+const logger = console;
 
 const $user = (req) => pick(req.body, ['screen_name', 'email', 'password']);
 

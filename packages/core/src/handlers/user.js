@@ -1,6 +1,8 @@
 import User from '../models/User';
-import logger from '../utils/logger';
+// import logger from '../utils/logger';
 import { http } from '../utils/http';
+
+const logger = console;
 
 // @todo: simplify and remove code duplication in `catch(err) {}` blocks
 
