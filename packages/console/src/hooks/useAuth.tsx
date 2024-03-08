@@ -28,17 +28,21 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     setError(undefined);
 
     apiUser
       .getCurrentUser()
       .then((user) => setUser(user))
       .catch((err) => setError(err))
-      .finally(() => setLoadingInitial(false));
+      .finally(() => {
+        setLoading(false);
+        setLoadingInitial(false);
+      });
   }, []);
 
   function login() {

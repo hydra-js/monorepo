@@ -1,12 +1,14 @@
-const pick = require('lodash/pick');
+import pick from 'lodash/pick';
 
-const User = require('../models/User');
-const { http } = require('../utils/http');
-const logger = require('../utils/logger');
+import User from '../models/User';
+import { http } from '../utils/http';
+// import logger from '../utils/logger';
+
+const logger = console;
 
 const $user = (req) => pick(req.body, ['screen_name', 'email', 'password']);
 
-module.exports = {
+export default {
   register: async (req, res) => {
     const user = $user(req);
     try {

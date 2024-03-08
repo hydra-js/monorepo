@@ -2,7 +2,7 @@
 
 ## Approval Status
 
-- [ ] Approved
+- [x] Approved
 - [ ] Rejected
 
 ## Background

@@ -1,16 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const xss = require('xss-clean');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
-const hpp = require('hpp');
-const morgan = require('morgan');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import rateLimit from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
+import hpp from 'hpp';
+import morgan from 'morgan';
+import path from 'path';
 
-const logger = require('./utils/logger');
+import logger from './utils/logger';
 
 // Normalize port into a number, string, or false.
+// eslint-disable-next-line jsdoc/require-jsdoc
 function normalizePort(val) {
   const port = parseInt(val, 10);
 
@@ -20,6 +21,7 @@ function normalizePort(val) {
   return false;
 }
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 async function createServer({ namespace, router, port }) {
   const app = express();
 
@@ -76,8 +78,9 @@ async function createServer({ namespace, router, port }) {
   return server;
 }
 
+// eslint-disable-next-line jsdoc/require-jsdoc
 async function startServer({ port, namespace, router }) {
   createServer({ port: normalizePort(port), namespace, router });
 }
 
-module.exports = startServer;
+export default startServer;

@@ -1,4 +1,4 @@
-const httpStatus = {
+export const httpStatus = {
   100: 'Continue',
   101: 'Switching Protocols',
   200: 'OK',
@@ -53,7 +53,7 @@ Object.keys(httpStatus).forEach((code) => {
 // @todo: format response by reducing code duplication
 
 // eslint-disable-next-line arrow-body-style
-const http = (resp) => {
+export const http = (resp) => {
   return {
     ok: (message = httpStatus[_http.OK]) => {
       resp
@@ -72,6 +72,12 @@ const http = (resp) => {
         response: { message, error: true },
       });
     },
+    notFound: (message = httpStatus[_http.NOT_FOUND]) => {
+      resp.status(_http.NOT_FOUND).json({
+        code: _http.NOT_FOUND,
+        response: { message, error: true },
+      });
+    },
     unauthorized: (message = httpStatus[_http.UNAUTHORIZED]) => {
       resp.status(_http.UNAUTHORIZED).json({
         code: _http.UNAUTHORIZED,
@@ -87,4 +93,4 @@ const http = (resp) => {
   };
 };
 
-module.exports = { http };
+export default { http };

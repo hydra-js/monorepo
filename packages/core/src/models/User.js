@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
+import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
-const { HYDRA_JWT_SECRET } = require('../config');
+import config from '../config.js';
 
 const schema = mongoose.Schema(
   {
@@ -89,7 +89,7 @@ schema.methods.generateJWT = function () {
       // eslint-disable-next-line radix
       exp: parseInt(exp.getTime() / 1000),
     },
-    HYDRA_JWT_SECRET,
+    config.HYDRA_JWT_SECRET,
   );
 };
 
@@ -107,4 +107,4 @@ schema.methods.toJSON = function () {
   };
 };
 
-module.exports = mongoose.model('User', schema);
+export default mongoose.model('User', schema);

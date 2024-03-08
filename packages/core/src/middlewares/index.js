@@ -1,4 +1,6 @@
-const logger = require('../utils/logger');
+// const logger = require('../utils/logger');
+
+const logger = console;
 
 export const authUser =
   (...roles) =>

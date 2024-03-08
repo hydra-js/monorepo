@@ -1,10 +1,12 @@
-const User = require('../models/User');
-const logger = require('../utils/logger');
-const { http } = require('../utils/http');
+import User from '../models/User';
+// import logger from '../utils/logger';
+import { http } from '../utils/http';
+
+const logger = console;
 
 // @todo: simplify and remove code duplication in `catch(err) {}` blocks
 
-module.exports = {
+export default {
   getAll: async (_, res) => {
     try {
       // @todo: remove token from response and sanatize the response further

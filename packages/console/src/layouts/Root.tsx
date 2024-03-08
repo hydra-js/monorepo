@@ -1,3 +1,8 @@
+ 
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAppStatus as apiGetAppStatus } from 'src/api/core';
+
 import useAuth from 'src/hooks/useAuth';
 import Login from 'src/screens/Login';
 
@@ -12,9 +17,24 @@ type LayoutProps = {
 type Props = ContainerProps & LayoutProps;
 
 export default function RootLayout({ children, enableAuth = false }: Props) {
-  const { user, loading, error } = useAuth();
+  const navigate = useNavigate();
+  const { loading, error, user } = useAuth();
 
-  if (loading) return <div>loading...</div>;
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    apiGetAppStatus()
+      .then((appStatus) => {
+        if (!appStatus) return navigate('/bootstrap');
+      })
+      .catch(() => {})
+      .finally(() => setIsReady(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isLoading = enableAuth ? loading || !isReady : !isReady;
+
+  if (isLoading) return <div>loading...</div>;
 
   if (error) return <div>{error}</div>;
 
