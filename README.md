@@ -15,5 +15,5 @@ yarn
 cd hydrajs-monorepo/packages/core
 yarn link
 cd ../server-nodejs
-yarn yarn link "@hydra-js/core
+yarn link "@hydra-js/core
 ```
