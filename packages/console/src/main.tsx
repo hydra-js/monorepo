@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import ConsoleLayout from './layouts/Console';
+
 import Providers from 'src/providers';
+import Bootstrap from 'src/screens/Bootstrap';
 import Namespaces from 'src/screens/Namespaces';
 import Resources from 'src/screens/Resources';
 import Users from 'src/screens/Users';
@@ -17,27 +20,55 @@ httpInit();
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Home enableAuth />
+      </ConsoleLayout>
+    ),
+  },
+  {
+    path: '/bootstrap',
+    element: <Bootstrap />,
   },
   {
     path: '/namespaces',
-    element: <Namespaces enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Namespaces enableAuth />
+      </ConsoleLayout>
+    ),
   },
   {
     path: '/resources',
-    element: <Resources enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Resources enableAuth />
+      </ConsoleLayout>
+    ),
   },
   {
     path: '/users',
-    element: <Users enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Users enableAuth />
+      </ConsoleLayout>
+    ),
   },
   {
     path: '/assets',
-    element: <Assets enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Assets enableAuth />
+      </ConsoleLayout>
+    ),
   },
   {
     path: '/settings',
-    element: <Settings enableAuth />,
+    element: (
+      <ConsoleLayout>
+        <Settings enableAuth />
+      </ConsoleLayout>
+    ),
   },
 ]);
 

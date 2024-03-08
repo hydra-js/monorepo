@@ -1,7 +1,7 @@
 import { ThemeProvider as StyledProvider } from 'styled-components';
 
 import './reset.css';
-import './theme.css';
+import './main.css';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
