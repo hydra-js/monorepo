@@ -4,10 +4,7 @@
     [
       "module-resolver",
       {
-        "alias": {
-          "@hydra-js/core-local": "./src/core",
-          "utils": "./src/utils"
-        }
+        "alias": {}
       }
     ]
   ]
