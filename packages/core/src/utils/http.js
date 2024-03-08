@@ -93,4 +93,4 @@ export const http = (resp) => {
   };
 };
 
-export default { http };
+export default http;

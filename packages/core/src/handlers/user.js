@@ -54,6 +54,7 @@ export default {
     }
     return res.end();
   },
+  put: (_, res) => res.status(200).json({}),
   delete: async (req, res) => {
     try {
       // @todo: validate request origin and owner (should do in the middleware)

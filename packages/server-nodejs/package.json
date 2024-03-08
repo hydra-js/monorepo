@@ -4,9 +4,9 @@
   "description": "Hydra Nodjs Server",
   "main": "./dist/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js",
-    "prestart:prod": "yarn build",
-    "start:prod": "cross-env NODE_ENV=production node ./dist/index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js",
+    "prestart": "yarn build",
+    "start": "cross-env NODE_ENV=production node ./dist/index.js",
     "debug": "cross-env NODE_ENV=debug nodemon --inspect --exec babel-node ./src/index.js",
     "prebuild": "rm -rf dist",
     "build": "babel ./src --out-dir dist --copy-files",
@@ -19,11 +19,9 @@
       "dist/*"
     ]
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {
-    "@hydra-js/core": "file:../core",
+    "@hydra-js/core": "^1.0.0-alpha.0",
     "console-stamp": "^3.1.2",
     "core-js": "^3.36.0",
     "cors": "^2.8.5",
