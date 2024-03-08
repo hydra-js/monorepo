@@ -1,8 +1,6 @@
 # Hydra-JS (Monorepo)
 
-Elevating Development, Unleashing Efficiency.
-
-## Developer Guide
+## Getting Started
 
 ```bash
 git clone git@github.com:hydra-js/monorepo.git hydrajs-monorepo
