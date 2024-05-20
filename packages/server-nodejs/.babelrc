@@ -1,11 +1,14 @@
 {
-  "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
-  "plugins": [
+  "presets": [
     [
-      "module-resolver",
+      "@babel/preset-env",
       {
-        "alias": {}
+        "targets": {
+          "node": "14"
+        }
       }
-    ]
+    ],
+    "@babel/preset-typescript",
+    "@babel/preset-react"
   ]
 }
