@@ -22,5 +22,13 @@ module.exports = {
       'babel-module': {},
     },
   },
+  overrides: [
+    {
+      files: ['*.jsx'],
+      rules: {
+        'no-unused-vars': 'off',
+      },
+    },
+  ],
   ignorePatterns: [],
 };
