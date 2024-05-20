@@ -48,9 +48,9 @@ export async function startDefaultServer() {
 
   app.use("/api", (req, res, next) => {
     const handler = getApiHandler(req);
-    if (handler && typeof handler) return handler(req, res, next);
+    if (handler && typeof handler === 'function') return handler(req, res, next);
 
-    return res.send(404);
+    return res.sendStatus(404);
   })
 
   // Handle incoming requests
