@@ -1,7 +1,10 @@
+import path from 'node:path';
+import fs from 'node:fs';
+
 import { readDir } from './fs';
 import config from './config';
 
-const { templateDir } = config.CONTEXT;
+const { templateDir, apiDir } = config.CONTEXT;
 
 export function getRoutes() {
   const files = readDir(templateDir);
@@ -37,4 +40,12 @@ export function normalizePort(val) {
   if (port >= 0) return port;
 
   return false;
+}
+
+export function getApiHandler(req) {
+  const { url, method } = req;
+  const urlPath = url.split('/').filter(p => p !== "");
+  urlPath.push(`${method.toLowerCase()}.js`)
+  const filePath = path.join(apiDir, ...urlPath);
+  return fs.existsSync(filePath)? require(filePath).default : false;
 }

@@ -7,10 +7,11 @@ if (config.error) throw config.error;
 const { parsed: envs } = config;
 
 const rootDir = path.join(__dirname, '..', '..');
-const templateDir = path.join(rootDir, 'views');
-const layoutDir = path.join(rootDir, 'views', '_layouts');
 const publicDir = path.join(rootDir, 'public');
-const indexLayout = path.join(rootDir, 'views', '_layouts', 'index.html');
+const templateDir = path.join(rootDir, 'views');
+const layoutDir = path.join(templateDir, '_layouts');
+const indexLayoutPath = path.join(layoutDir, 'index.html');
+const apiDir = path.join(rootDir, 'api');
 
 export default {
   ...envs,
@@ -19,6 +20,7 @@ export default {
     publicDir,
     templateDir,
     layoutDir,
-    indexLayout,
+    indexLayoutPath,
+    apiDir
   },
 };

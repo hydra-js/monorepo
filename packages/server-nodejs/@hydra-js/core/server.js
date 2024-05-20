@@ -1,13 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import path from 'node:path';
 import register from '@babel/register';
 
 import config from './config';
 import { secure, useHandlebars, useJSX } from './middlewares';
-import { getRoutes, normalizePort } from './utils';
+import { getRoutes, normalizePort, getApiHandler } from './utils';
 
-const { HYDRA_PORT, CONTEXT: { templateDir, publicDir } } = config;
+const { HYDRA_PORT, CONTEXT: { templateDir, publicDir, apiDir } } = config;
 
 export async function startDefaultServer() {
   // Register Babel for JSX files
@@ -46,6 +45,13 @@ export async function startDefaultServer() {
     console.error(err.stack);
     return res.renderHtml('500', { error: err });
   });
+
+  app.use("/api", (req, res, next) => {
+    const handler = getApiHandler(req);
+    if (handler && typeof handler) return handler(req, res, next);
+
+    return res.send(404);
+  })
 
   // Handle incoming requests
   app.get('*', (req, res) => {
