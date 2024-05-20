@@ -20,5 +20,5 @@ export default {
   __templatedir,
   __layoutdir,
   __indexlayout,
-  __apidir
+  __apidir,
 };

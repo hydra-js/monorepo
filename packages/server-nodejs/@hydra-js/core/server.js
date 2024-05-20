@@ -41,17 +41,19 @@ export async function startDefaultServer() {
   app.use(express.static(__publicdir));
 
   // Error handling middleware
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
+    // eslint-disable-next-line no-console
     console.error(err.stack);
     return res.renderHtml('500', { error: err });
   });
 
-  app.use("/api", (req, res, next) => {
+  app.use('/api', (req, res, next) => {
     const handler = getApiHandler(req);
-    if (handler && typeof handler === 'function') return handler(req, res, next);
+    if (handler && typeof handler === 'function')
+      return handler(req, res, next);
 
     return res.sendStatus(404);
-  })
+  });
 
   // Handle incoming requests
   app.get('*', (req, res) => {
@@ -72,6 +74,7 @@ export async function startDefaultServer() {
 
   // Start server
   app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server running on port ${PORT}`);
   });
 }

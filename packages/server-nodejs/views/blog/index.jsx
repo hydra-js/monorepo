@@ -1,5 +1,6 @@
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 
-export default function Blog(props) {
+export default function Blog() {
   return <p>List all the blog posts here</p>;
 }

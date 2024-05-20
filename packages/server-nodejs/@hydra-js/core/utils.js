@@ -11,19 +11,19 @@ export function getRoutes() {
   const routes = {};
   files.forEach((fileOrDir) => {
     if (!fileOrDir.startsWith('_')) {
-      const [path, type] = fileOrDir.split('.');
+      const [filePath, type] = fileOrDir.split('.');
       // Exclude certain files
-      if (!['404'].includes(path)) {
+      if (!['404'].includes(filePath)) {
         // Only allowing for `jsx`, `html` file type for now
         if (['jsx', 'html'].includes(type)) {
-          const pathNormalized = path
+          const pathNormalized = filePath
             .split('/')
             .filter((fp) => fp !== 'index')
             .join('/');
 
           routes[`/${pathNormalized}`] = {
-            template: { engine: type, view: path },
-            path: `${__templatedir}/${path}.${type}`,
+            template: { engine: type, view: filePath },
+            path: `${__templatedir}/${filePath}.${type}`,
           };
         }
       }
@@ -44,8 +44,9 @@ export function normalizePort(val) {
 
 export function getApiHandler(req) {
   const { url, method } = req;
-  const urlPath = url.split('/').filter(p => p !== "");
-  urlPath.push(`${method.toLowerCase()}.js`)
+  const urlPath = url.split('/').filter((p) => p !== '');
+  urlPath.push(`${method.toLowerCase()}.js`);
   const filePath = path.join(__apidir, ...urlPath);
-  return fs.existsSync(filePath)? require(filePath).default : null;
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  return fs.existsSync(filePath) ? require(filePath).default : null;
 }

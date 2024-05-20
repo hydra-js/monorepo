@@ -1,0 +1,7 @@
+{
+  "watch": ["@hydra-js", "api", "bin", "public", "views", "index.js"],
+  "ext": "ts,tsx,js,jsx,html",
+  "exec": "nodemon --exec ts-node ./index.js",
+  "verbose": true,
+  "ignore": ["dist/*"]
+}

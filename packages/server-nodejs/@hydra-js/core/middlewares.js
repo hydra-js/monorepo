@@ -21,7 +21,7 @@ export function useHandlebars(req, res, next) {
   res.renderHtml = (view, options = {}) => {
     const templatePath = path.join(__templatedir, `${view}.html`);
     const body = handlebars.compile(fs.readFileSync(templatePath, 'utf8'))(
-      options
+      options,
     );
     const html = handlebars.compile(fs.readFileSync(__indexlayout, 'utf8'))({
       ...options,
@@ -36,13 +36,14 @@ export function useJSX(filePath, options, cb) {
   // JSX engine middleware
   try {
     const { locals } = options;
+    // eslint-disable-next-line import/no-dynamic-require, global-require
     const reactElement = require(filePath).default;
     const jsx = React.createElement(reactElement, locals);
     const jsxToHtml = ReactDOMServer.renderToString(jsx);
 
     // Render with master layout
     const withTemplate = handlebars.compile(
-      fs.readFileSync(__indexlayout, 'utf8')
+      fs.readFileSync(__indexlayout, 'utf8'),
     );
     const html = withTemplate({ locals, body: jsxToHtml });
 

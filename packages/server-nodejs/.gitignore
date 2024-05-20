@@ -9,6 +9,8 @@ dist
 
 # Ignore any log files
 *.log
+yarn-error.log
 
 # Ignore macOS system files
 .DS_Store
+
