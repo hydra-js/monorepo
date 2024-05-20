@@ -50,3 +50,12 @@ export function getApiHandler(req) {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   return fs.existsSync(filePath) ? require(filePath).default : null;
 }
+
+export function isValidMongoUrl(url) {
+  return (
+    url &&
+    /^(mongodb:(?:\/{2})?)((\w+?):(\w+?)@|:?@?)(\w+?)(:(\d+))?\/(\w+?)$/.test(
+      url,
+    )
+  );
+}
