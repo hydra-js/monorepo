@@ -4,10 +4,10 @@ import fs from 'node:fs';
 import { readDir } from './fs';
 import config from './config';
 
-const { templateDir, apiDir } = config.CONTEXT;
+const { __templatedir, __apidir } = config;
 
 export function getRoutes() {
-  const files = readDir(templateDir);
+  const files = readDir(__templatedir);
   const routes = {};
   files.forEach((fileOrDir) => {
     if (!fileOrDir.startsWith('_')) {
@@ -23,7 +23,7 @@ export function getRoutes() {
 
           routes[`/${pathNormalized}`] = {
             template: { engine: type, view: path },
-            path: `${templateDir}/${path}.${type}`,
+            path: `${__templatedir}/${path}.${type}`,
           };
         }
       }
@@ -46,6 +46,6 @@ export function getApiHandler(req) {
   const { url, method } = req;
   const urlPath = url.split('/').filter(p => p !== "");
   urlPath.push(`${method.toLowerCase()}.js`)
-  const filePath = path.join(apiDir, ...urlPath);
-  return fs.existsSync(filePath)? require(filePath).default : false;
+  const filePath = path.join(__apidir, ...urlPath);
+  return fs.existsSync(filePath)? require(filePath).default : null;
 }

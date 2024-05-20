@@ -6,7 +6,7 @@ import config from './config';
 import { secure, useHandlebars, useJSX } from './middlewares';
 import { getRoutes, normalizePort, getApiHandler } from './utils';
 
-const { HYDRA_PORT, CONTEXT: { templateDir, publicDir, apiDir } } = config;
+const { HYDRA_PORT, __publicdir, __templatedir } = config;
 
 export async function startDefaultServer() {
   // Register Babel for JSX files
@@ -34,11 +34,11 @@ export async function startDefaultServer() {
   app.use(useHandlebars);
 
   app.engine('jsx', useJSX);
-  app.set('views', templateDir);
+  app.set('views', __templatedir);
   app.set('view engine', 'jsx');
 
   // Serve static files
-  app.use(express.static(publicDir));
+  app.use(express.static(__publicdir));
 
   // Error handling middleware
   app.use((err, req, res, next) => {

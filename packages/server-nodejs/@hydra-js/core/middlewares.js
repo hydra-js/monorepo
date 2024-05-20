@@ -6,7 +6,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import config from './config';
 
-const { templateDir, indexLayoutPath } = config.CONTEXT;
+const { __templatedir, __indexlayout } = config;
 
 export function secure(req, res, next) {
   // Add security headers
@@ -19,11 +19,11 @@ export function secure(req, res, next) {
 
 export function useHandlebars(req, res, next) {
   res.renderHtml = (view, options = {}) => {
-    const templatePath = path.join(templateDir, `${view}.html`);
+    const templatePath = path.join(__templatedir, `${view}.html`);
     const body = handlebars.compile(fs.readFileSync(templatePath, 'utf8'))(
       options
     );
-    const html = handlebars.compile(fs.readFileSync(indexLayoutPath, 'utf8'))({
+    const html = handlebars.compile(fs.readFileSync(__indexlayout, 'utf8'))({
       ...options,
       body,
     });
@@ -42,7 +42,7 @@ export function useJSX(filePath, options, cb) {
 
     // Render with master layout
     const withTemplate = handlebars.compile(
-      fs.readFileSync(indexLayoutPath, 'utf8')
+      fs.readFileSync(__indexlayout, 'utf8')
     );
     const html = withTemplate({ locals, body: jsxToHtml });
 
