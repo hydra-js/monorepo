@@ -3,8 +3,11 @@ import cors from 'cors';
 import path from 'node:path';
 import register from '@babel/register';
 
-import { getRoutes, normalizePort } from './utils';
+import config from './config';
 import { secure, useHandlebars, useJSX } from './middlewares';
+import { getRoutes, normalizePort } from './utils';
+
+const { HYDRA_PORT } = config;
 
 export async function startDefaultServer() {
   // Register Babel for JSX files
@@ -13,7 +16,7 @@ export async function startDefaultServer() {
   });
 
   // (@configs)
-  const PORT = normalizePort(Number(process.env.PORT) || 3000);
+  const PORT = normalizePort(Number(HYDRA_PORT) || 3000);
   const metaProps = { page: { title: 'Hydra-JS Page Title' } };
 
   // bootstratp the app
