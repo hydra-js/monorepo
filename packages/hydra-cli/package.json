@@ -1,6 +1,6 @@
 {
   "name": "@hydra-js/cli",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Hydra-JS Command-line Toolkit",
   "bin": {
     "hydra": "./index.js"
@@ -9,7 +9,15 @@
     "start": "node index.js",
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+    "hydra",
+    "hydra-js",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hydra-js/monorepo.git"
+  },
   "contributors": [
     {
       "name": "heimdallrj",

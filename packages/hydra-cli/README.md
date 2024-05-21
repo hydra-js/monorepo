@@ -10,8 +10,8 @@
 ### Setup
 
 ```bash
-git clone https://github.com/hydra-js/cli.git hydra-cli
-cd hydra-cli
+git clone git@github.com:hydra-js/monorepo.git hydra-js-monorepo
+cd hydra-js-monorepo/packages/hydra-cli
 npm install
 ```
 
