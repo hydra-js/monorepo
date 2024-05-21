@@ -1,9 +1,33 @@
 {
-  "name": "hydra-cli",
+  "name": "@hydra-js/cli",
   "version": "1.0.0-alpha.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Hydra-JS Command-line Toolkit",
+  "bin": {
+    "hydra": "./index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "contributors": [
+    {
+      "name": "heimdallrj",
+      "email": "mailtokasun@gmail.com",
+      "url": "https://github.com/heimdallrj"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "simple-git": "^3.24.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0"
   }
 }
